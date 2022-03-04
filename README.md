@@ -6,5 +6,5 @@ Student ID: 122206204<br/>
 Course/Section: WEB322NDD
 
 ## Project URLs
-GitHub Repository: https://github.com/LiamDN/web322-lnugara1.git<br/>
+GitHub Repository: https://github.com/LiamDN/web322-lnugara1<br/>
 Heroku URL: https://web322-lnugara1.herokuapp.com/

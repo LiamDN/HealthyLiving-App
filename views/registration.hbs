@@ -1,21 +1,33 @@
 <div class="form-wrapper">
     <h2 class="form-header">Sign Up</h2>
-    <form>
+    <form method="post" action="/registration">
         <div class="mb-3">
             <label for="firstName" class="form-label">First Name</label>
-            <input type="text" class="form-control" placeholder="Enter first name" id="firstName">
+            <input type="text" class="form-control" placeholder="Enter first name" id="firstName" name="firstName" value="{{values.firstName}}">
+            {{#if validationMessages.firstName}}
+                <span style="color: red;">{{validationMessages.firstName}}</span>
+            {{/if}}
         </div>
         <div class="mb-3">
             <label for="lastName" class="form-label">Last Name</label>
-            <input type="text" class="form-control" placeholder="Enter last name" id="lastName">
+            <input type="text" class="form-control" placeholder="Enter last name" id="lastName" name="lastName" value="{{values.lastName}}">
+            {{#if validationMessages.lastName}}
+                <span style="color: red;">{{validationMessages.lastName}}</span>
+            {{/if}}
         </div>
         <div class="mb-3">
-            <label for="signupEmail" class="form-label">Email address</label>
-            <input type="email" class="form-control" placeholder="Enter email" id="signupEmail">
+            <label for="email" class="form-label">Email address</label>
+            <input type="text" class="form-control" placeholder="Enter email" id="email" name="email" value="{{values.email}}">
+            {{#if validationMessages.email}}
+                <span style="color: red;">{{validationMessages.email}}</span>
+            {{/if}}
         </div>
         <div class="mb-3">
-            <label for="signUpPassword" class="form-label">Password</label>
-            <input type="password" class="form-control" placeholder="Enter password" id="signUpPassword">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" placeholder="Enter password" id="password" name="password" value="{{values.password}}">
+            {{#if validationMessages.password}}
+                <span style="color: red;">{{validationMessages.password}}</span>
+            {{/if}}
         </div>
         <button type="submit" class="btn btn-primary">Sign up!</button>
     </form>
