@@ -24,11 +24,14 @@ router.get("/registration", function (req, res) {
 });
 
 router.post("/registration", function (req, res) {
-    console.log(req.body);
     const { firstName, lastName, email, password } = req.body;
 
     let passedValidation = true;
     let validationMessages = {};
+    // Regular Expression taken and modified from https://www.ocpsoft.org/tutorials/regular-expressions/password-regular-expression/
+    var passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;\"\'<>,.?\/~`_+\-=|\\]).{8,12}$/;
+
+    var emailRegex = /^[a-zA-Z0-9._\-+\/~!#$%^&()\[\]{}|\"\'*?:;<>,?]+@[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,3}$/;
 
     if (typeof firstName !== 'string' || firstName.trim().length === 0) {
         passedValidation = false;
@@ -42,11 +45,19 @@ router.post("/registration", function (req, res) {
         passedValidation = false;
         validationMessages.email = "Please enter email";
     }
+    else if (!emailRegex.test(email)) {
+        passedValidation = false;
+        validationMessages.email = "Please enter a valid email address";
+    }
     if (typeof password !== 'string' || password.trim().length === 0) {
         passedValidation = false;
-        validationMessages.password = "Please enter a password";
+        validationMessages.passwordNull = "Please enter a password";
     }
-    
+    else if (!passwordRegex.test(password)) {
+        passedValidation = false;
+        validationMessages.passwordInvalid = true;
+    }
+
     if(passedValidation) {
         const sgMail = require("@sendgrid/mail");
         sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
@@ -63,7 +74,11 @@ router.post("/registration", function (req, res) {
 
                 Please review your account details:<br>
                 Full Name: ${firstName} ${lastName}<br>
-                Email Address: ${email}<br>
+                Email Address: ${email}<br><br>
+
+                Return to the home page: https://web322-lnugara1.herokuapp.com<br><br>
+
+                Author: Liam Nugara, Website Name: HealthyLiving<br>
                 `
         } ;
 
@@ -73,7 +88,7 @@ router.post("/registration", function (req, res) {
             })
             .catch(err => {
                 console.log(`Error ${err}`);
-                validationMessages.email = "Invalid email"
+                validationMessages.email = "Invalid email, confirmation could not be sent to " + email;
 
                 res.render("registration", {
                     title: "Sign Up",
@@ -95,6 +110,33 @@ router.get("/login", function (req, res) {
     res.render("sign-in", {
         title: "Login",
     });
+});
+
+router.post("/login", function (req, res) {
+    const { email, password } = req.body;
+
+    let passedValidation = true;
+    let validationMessages = {};
+
+    if (typeof email !== 'string' || email.trim().length === 0) {
+        passedValidation = false;
+        validationMessages.email = "Please enter email";
+    }
+    if (typeof password !== 'string' || password.trim().length === 0) {
+        passedValidation = false;
+        validationMessages.password = "Please enter a password";
+    }
+    
+    if(passedValidation) {
+        res.redirect("/welcome");
+    }
+    else {
+        res.render("sign-in", {
+            title: "Log In",
+            values: req.body,
+            validationMessages
+        });
+    }
 });
 
 router.get("/welcome", function (req, res) {

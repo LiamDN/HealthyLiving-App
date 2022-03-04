@@ -24,9 +24,13 @@
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" placeholder="Enter password" id="password" name="password" value="{{values.password}}">
-            {{#if validationMessages.password}}
-                <span style="color: red;">{{validationMessages.password}}</span>
+            <input type="text" class="form-control" placeholder="Enter password" id="password" name="password" value="{{values.password}}">
+            {{#if validationMessages.passwordNull}}
+                <span style="color: red;">{{validationMessages.passwordNull}}</span>
+            {{/if}}
+            {{#if validationMessages.passwordInvalid}}
+                <span style="color: red;">Please enter a password (8 to 12 characters)<br>
+                    Must constain at least: 1 lowercase, 1 uppercase, 1 number, 1 symbol</span>
             {{/if}}
         </div>
         <button type="submit" class="btn btn-primary">Sign up!</button>
