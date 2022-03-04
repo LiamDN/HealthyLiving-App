@@ -1,7 +1,7 @@
 var mealkits = [
     { 
         title: "Grilled Salmon", 
-        includes: "Arugala & Cherry Tomato Salad", 
+        includes: "Arugula & Cherry Tomato Salad", 
         description: "Wild Atlantic Salmon on a peppery & zesty salad.", 
         category: "Classic Dinner Meals", 
         price: 12.99, 
@@ -13,8 +13,8 @@ var mealkits = [
     },
     { 
         title: "French Toast", 
-        includes: "Farmfresh rasberries & perfectively riped bananas", 
-        description: "Hearty 'Texas' French toast with a hind of vanila & real Ceylon cinnomon.", 
+        includes: "Farmfresh rasberries & perfectly ripe bananas", 
+        description: "Hearty 'Texas' French toast with a hint of vanila & real Ceylon cinnamon.", 
         category: "Breakfast", 
         price: 8.99, 
         cookingTime: 20, 
@@ -62,7 +62,7 @@ var mealkits = [
     { 
         title: "Enchiladas", 
         includes: "Authenic refried beans, pickeled onions, fresh avocado and salad", 
-        description: "Shredded slow cooked chicken in taditional spices in a soft taco shell.",
+        description: "Shredded slow cooked chicken in traditional spices in a soft taco shell.",
         category: "Classic Dinner Meals", 
         price: 11.99, 
         cookingTime: 40, 
