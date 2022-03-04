@@ -69,10 +69,11 @@ router.post("/registration", function (req, res) {
 
         sgMail.send(msg)
             .then(() => {
-                res.send("Success, email sent.");
+                res.redirect('/welcome/?nm=' + firstName + "&em=" + email);
             })
             .catch(err => {
                 console.log(`Error ${err}`);
+                validationMessages.email = "Invalid email"
 
                 res.render("registration", {
                     title: "Sign Up",
@@ -94,6 +95,23 @@ router.get("/login", function (req, res) {
     res.render("sign-in", {
         title: "Login",
     });
+});
+
+router.get("/welcome", function (req, res) {
+    if(req.query.nm && req.query.em) {
+        res.render("welcome", {
+            title: "Welcome!",
+            userInfo: {
+                firstName: req.query.nm,
+                email: req.query.em
+            }
+        });
+    }
+    else {
+        res.render("welcome", {
+            title: "Welcome!",
+        });
+    }
 });
 
 module.exports = router;

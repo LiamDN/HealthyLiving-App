@@ -1,0 +1,18 @@
+<div class="welcome-box">
+    <div class="welcome-box-img">
+
+    </div>
+    <div class="welcome-box-text">
+        {{#if userInfo}}
+        <h2 class="pb-3 pt-3">Welcome {{userInfo.firstName}}!</h2>
+        <p>We've sent you an email to {{userInfo.email}} to verify your account information.</p>
+        <p>We look forward to providing you healthy meals!</p> 
+        <p>Get started by looking at what's <a href="/on-the-menu">on the menu</a>.</p>
+        {{else}}
+        <h2 class="pb-3 pt-3">Welcome back!</h2>
+        <p>Thank you for visiting HealthyLiving!</p> 
+        <p>Get started by checking out what's <a href="/on-the-menu">on the menu</a>.</p>
+        <p>Or, view our top meals on the <a href="/">home page</a>.</p>
+        {{/if}}
+    </div>
+</div>
