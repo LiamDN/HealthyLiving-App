@@ -1,3 +1,4 @@
+const bcrypt = require("bcryptjs/dist/bcrypt");
 const express = require("express");
 const userModel = require("../models/users");
 const router = express.Router();
@@ -128,7 +129,49 @@ router.post("/login", function (req, res) {
     }
     
     if(passedValidation) {
-        res.redirect("/welcome");
+        let errors = [];
+
+        userModel.findOne({
+            email: req.body.email
+        })
+        .then(user => {
+            if(user) {
+                bcrypt.compare(req.body.password, user.password)
+                .then(isMatched => {
+                    if(isMatched) {
+                        // Create a new session storing the user
+                        req.session.user = user;
+                        console.log("User logged in");
+                        res.redirect("/welcome");
+                    }
+                    else {
+                        console.log("Passwords do not match.");
+                        validationMessages.password = "Incorrect password";
+
+                        res.render("user/sign-in", {
+                            values: {
+                                email: req.body.email
+                            },
+                            validationMessages
+                        })
+                    }
+                })   
+            } else {
+                console.log("User not found in the database.");
+                errors.push(`Sorry, user for email ${req.body.email} does not exist`);
+                res.render("user/sign-in", {
+                    errors
+                })
+            }
+        })
+        .catch(err => {
+            console.log(`Error finding the user in the database: ${err}`);
+            errors.push("Something went wrong.");
+
+            res.render("user/sign-in", {
+                errors
+            })
+        })        
     }
     else {
         res.render("user/sign-in", {
@@ -137,6 +180,12 @@ router.post("/login", function (req, res) {
             validationMessages
         });
     }
+});
+
+router.get("/logout", (req, res) => {
+    req.session.destroy();
+
+    res.redirect("/user/login");
 });
 
 module.exports = router;

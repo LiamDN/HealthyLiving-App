@@ -15,6 +15,7 @@ const express = require("express");
 const exphbs = require('express-handlebars');
 const dotenv = require('dotenv');
 const mongoose = require("mongoose");
+const session = require("express-session");
 
 // Set up dotenv
 dotenv.config({ path: "./config/keys.env"});
@@ -27,6 +28,18 @@ app.engine('.hbs', exphbs.engine({
     defaultLayout: "main"
 }));
 app.set('view engine', '.hbs');
+
+// Set up express-session
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+}));
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    next();
+})
 
 // Set up body parser
 app.use(express.urlencoded({ extended: false }));

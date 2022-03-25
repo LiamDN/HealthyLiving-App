@@ -16,5 +16,8 @@
             {{/if}}
         </div>
         <button type="submit" class="btn btn-primary">Log In</button>
+        {{#each errors}}
+            <div class="mt-3" style="color: red;">{{this}}</div>
+        {{/each}}
     </form>
 </div>
