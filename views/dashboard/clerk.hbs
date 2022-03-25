@@ -1,0 +1,21 @@
+<div class="dashboard">
+    <div class="dashboard-img">
+
+    </div>
+    <div class="dashboard-text">
+        {{#if user}}
+        <p class="pb-3 pt-3 font-weight-bold h2">Data Entry Clerk Dashboard</p>
+        <p class="pb-3 pt-3 h4">Welcome {{user.firstName}}!</p>
+        <p>This is your data entry dashboard. It is currently under construction.</p>
+        <p>Return to the <a href="/">home page</a>.</p>
+        {{else}}
+        <h2 class="pb-3 pt-3">Dashboard Error!</h2>
+        <p>Your are not signed in as a data entry clerk. You should not be able to see this page.</p> 
+        <p>Try <a href="/user/login">logging in here</a>.</p>
+        <p>Or, return to the <a href="/">home page</a>.</p>
+        {{/if}}
+    </div>
+    <div class="dashboard-img" style="background-position-x: 300px;">
+
+    </div>
+</div>

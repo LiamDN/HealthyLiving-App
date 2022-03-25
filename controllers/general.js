@@ -18,7 +18,7 @@ router.get("/on-the-menu", function (req, res) {
 });
 
 router.get("/welcome", function (req, res) {
-    res.render("welcome", {
+    res.render("general/welcome", {
         title: "Welcome!",
     });
 });

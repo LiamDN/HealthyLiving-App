@@ -1,0 +1,22 @@
+<div class="dashboard">
+    <div class="dashboard-img">
+
+    </div>
+    <div class="dashboard-text">
+        {{#if user}}
+        <p class="pb-3 pt-3 font-weight-bold h2">Customer Dashboard</p>
+        <p class="pb-3 pt-3 h4">Welcome {{user.firstName}}!</p>
+        <p class="pb-3 pt-3 h4">Shopping Cart</p>
+        <p>This is your shopping cart. You can find the list of items you are purchasing here. Currently under construction.</p>
+        <p>Return to the <a href="/">home page</a>.</p>
+        {{else}}
+        <h2 class="pb-3 pt-3">Dashboard Error!</h2>
+        <p>Your are not signed in as a customer. You should not be able to see this page.</p> 
+        <p>Try <a href="/user/login">logging in here</a>.</p>
+        <p>Or, return to the <a href="/">home page</a>.</p>
+        {{/if}}
+    </div>
+    <div class="dashboard-img" style="background-position-x: 300px;">
+
+    </div>
+</div>

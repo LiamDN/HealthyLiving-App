@@ -342,3 +342,33 @@ footer {
     background-color: aliceblue;
     padding: 30px;
 }
+
+.dashboard {
+    border: 2px #31525B;
+    border-radius: 15px;
+    padding: 0;
+    display: flex;
+    margin: 30px;
+    box-shadow: 0 0 5px #ccc;
+    overflow: hidden;
+}
+
+.dashboard-img {
+    background-image: url("/images/welcome.jpg");
+    background-size: cover;
+    width: 70px;
+    height: 600px;
+    border: #31525B;
+    border-width: 3px;
+    margin: 0;
+    background-position-x: 200px;
+}
+
+.dashboard-text {
+    color: #31525B;
+    margin: 0;
+    height: 600px;
+    flex-grow: 100;
+    background-color: aliceblue;
+    padding: 30px;
+}

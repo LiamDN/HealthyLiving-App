@@ -38,6 +38,8 @@ app.use(session({
 
 app.use((req, res, next) => {
     res.locals.user = req.session.user;
+    res.locals.isClerk = req.session.isClerk;
+    res.locals.isCustomer = req.session.isCustomer;
     next();
 })
 
@@ -61,9 +63,11 @@ app.use(express.static("public"));
 
 const generalController = require("./controllers/general");
 const userController = require("./controllers/user");
+const dashboardController = require("./controllers/dashboard");
 
 app.use("/", generalController);
 app.use("/user/", userController);
+app.use("/dashboard/", dashboardController);
 
 
 // *** DO NOT MODIFY THE LINES BELOW ***

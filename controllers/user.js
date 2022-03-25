@@ -43,45 +43,11 @@ router.post("/registration", function (req, res) {
         passedValidation = false;
         validationMessages.passwordInvalid = true;
     }
-    // Add send verification email and add user to the database
+
+    // Send verification email and add user to the database
     if(passedValidation) {
         const sgMail = require("@sendgrid/mail");
         sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-
-        const msg = {
-            to: email,
-            from: "lnugara1@myseneca.ca",
-            subject: "HealthyLiving Sign Up Confirmation",
-            html: 
-                `
-                Welcome ${firstName}!<br><br>
-                
-                Your HealthyLiving account has been created.<br><br>
-
-                Please review your account details:<br>
-                Full Name: ${firstName} ${lastName}<br>
-                Email Address: ${email}<br><br>
-
-                Return to the home page: https://web322-lnugara1.herokuapp.com<br><br>
-
-                Author: Liam Nugara, Website Name: HealthyLiving<br>
-                `
-        } ;
-
-        sgMail.send(msg)
-        .then(() => {
-            res.redirect('/welcome/?nm=' + firstName + "&em=" + email);
-        })
-        .catch(err => {
-            console.log(`Error ${err}`);
-            validationMessages.email = "Invalid email, confirmation could not be sent to " + email;
-
-            res.render("user/registration", {
-                title: "Sign Up",
-                values: req.body,
-                validationMessages
-            });
-        });
 
         const user = new userModel({
             firstName: req.body.firstName,
@@ -92,13 +58,60 @@ router.post("/registration", function (req, res) {
 
         user.save()
         .then((userSaved) => {
+            const msg = {
+                to: email,
+                from: "lnugara1@myseneca.ca",
+                subject: "HealthyLiving Sign Up Confirmation",
+                html: 
+                    `
+                    Welcome ${firstName}!<br><br>
+                    
+                    Your HealthyLiving account has been created.<br><br>
+    
+                    Please review your account details:<br>
+                    Full Name: ${firstName} ${lastName}<br>
+                    Email Address: ${email}<br><br>
+    
+                    Return to the home page: https://web322-lnugara1.herokuapp.com<br><br>
+    
+                    Author: Liam Nugara, Website Name: HealthyLiving<br>
+                    `
+            } ;
+    
+            sgMail.send(msg)
+            .then(() => {
+                // Logged in successfully
+                req.session.destroy();
+                req.session.user = req.body;
+                res.redirect("/welcome");
+            })
+            .catch(err => {
+                // If email couldn't be sent
+                console.log(`Error ${err}`);
+                validationMessages.email = "Invalid email, confirmation could not be sent to " + email;
+    
+                res.render("user/registration", {
+                    title: "Sign Up",
+                    values: req.body,
+                    validationMessages
+                });
+            });  
             console.log(`User ${userSaved.firstName} has been added to the database.`);
         })
         .catch((err) => {
+            // If user couldn't be added to database (may not have unique email)
+            validationMessages.email = `Could not create account, user for ${email} may already exist`;
+
+            res.render("user/registration", {
+                title: "Sign Up",
+                values: req.body,
+                validationMessages
+            });
             console.log(`Error adding user to the database: ${err}`);
         })
     }
     else {
+        // If didn't pass initial validation
         res.render("user/registration", {
             title: "Sign Up",
             values: req.body,
@@ -141,8 +154,15 @@ router.post("/login", function (req, res) {
                     if(isMatched) {
                         // Create a new session storing the user
                         req.session.user = user;
-                        console.log("User logged in");
-                        res.redirect("/welcome");
+                        req.session.isClerk = req.body.userRole === "clerk";
+                        req.session.isCustomer = req.body.userRole === "customer";
+                        console.log("User logged in as" + req.body.userRole);
+                        if(req.session.isClerk) {
+                            res.redirect("/dashboard/clerk");
+                        }
+                        else {
+                            res.redirect("/dashboard/customer");
+                        }
                     }
                     else {
                         console.log("Passwords do not match.");
