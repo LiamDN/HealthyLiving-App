@@ -168,20 +168,25 @@ router.post("/login", function (req, res) {
                     }
                     else {
                         console.log("Passwords do not match.");
-                        validationMessages.password = "Incorrect password";
+                        errors.push(`Invalid email and/or password`);
+                        //validationMessages.password = "Incorrect password";
 
                         res.render("user/sign-in", {
                             values: {
                                 email: req.body.email
                             },
-                            validationMessages
+                            errors
                         })
                     }
                 })   
             } else {
+                errors.push(`Invalid email and/or password`);
                 console.log("User not found in the database.");
-                errors.push(`Sorry, user for email ${req.body.email} does not exist`);
+                //errors.push(`Sorry, user for email ${req.body.email} does not exist`);
                 res.render("user/sign-in", {
+                    values: {
+                        email: req.body.email
+                    },
                     errors
                 })
             }
