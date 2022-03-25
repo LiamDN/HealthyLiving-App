@@ -50,10 +50,10 @@ router.post("/registration", function (req, res) {
         sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
 
         const user = new userModel({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: req.body.password
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
         });
 
         user.save()
@@ -81,7 +81,8 @@ router.post("/registration", function (req, res) {
             sgMail.send(msg)
             .then(() => {
                 // Logged in successfully
-                req.session.destroy();
+                req.session.isClerk = false;
+                req.session.isCustomer = false;
                 req.session.user = req.body;
                 res.redirect("/welcome");
             })
@@ -89,6 +90,7 @@ router.post("/registration", function (req, res) {
                 // If email couldn't be sent
                 console.log(`Error ${err}`);
                 validationMessages.email = "Invalid email, confirmation could not be sent to " + email;
+                userModel.deleteOne({ email: email });
     
                 res.render("user/registration", {
                     title: "Sign Up",
