@@ -15,7 +15,22 @@
                 <span style="color: red;">{{validationMessages.password}}</span>
             {{/if}}
         </div>
-        <button type="submit" class="btn btn-primary">Log In</button>
+        <div class="role-radios mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                <label class="form-check-label" for="flexRadioDefault1">
+                    Data Entry Clerk
+                </label>
+             </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                <label class="form-check-label" for="flexRadioDefault2">
+                    Customer
+                </label>
+        </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Log In</button>    
         {{#each errors}}
             <div class="mt-3" style="color: red;">{{this}}</div>
         {{/each}}

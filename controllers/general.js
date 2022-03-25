@@ -18,20 +18,9 @@ router.get("/on-the-menu", function (req, res) {
 });
 
 router.get("/welcome", function (req, res) {
-    if(req.query.nm && req.query.em) {
-        res.render("welcome", {
-            title: "Welcome!",
-            userInfo: {
-                firstName: req.query.nm,
-                email: req.query.em
-            }
-        });
-    }
-    else {
-        res.render("welcome", {
-            title: "Welcome!",
-        });
-    }
+    res.render("welcome", {
+        title: "Welcome!",
+    });
 });
 
 module.exports = router;

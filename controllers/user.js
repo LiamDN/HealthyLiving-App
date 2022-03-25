@@ -185,7 +185,7 @@ router.post("/login", function (req, res) {
 router.get("/logout", (req, res) => {
     req.session.destroy();
 
-    res.redirect("/user/login");
+    res.redirect("/");
 });
 
 module.exports = router;
