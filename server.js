@@ -14,6 +14,9 @@ const path = require("path");
 const express = require("express");
 const exphbs = require('express-handlebars');
 const dotenv = require('dotenv');
+const mongoose = require("mongoose");
+
+// Set up dotenv
 dotenv.config({ path: "./config/keys.env"});
 
 const app = express();
@@ -28,12 +31,26 @@ app.set('view engine', '.hbs');
 // Set up body parser
 app.use(express.urlencoded({ extended: false }));
 
+mongoose.connect(process.env.MONGO_DB_CONN_STRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => {
+    console.log("Conneced to the MongoDB database.")
+})
+.catch((err) => {
+    console.log(`Error connecting to the MongoDB database: ${err}`);
+});
+
 // Add your routes here
 // e.g. app.get() { ... }
 app.use(express.static("public"));
 
 const generalController = require("./controllers/general");
+const userController = require("./controllers/user");
+
 app.use("/", generalController);
+app.use("/user/", userController);
 
 
 // *** DO NOT MODIFY THE LINES BELOW ***
