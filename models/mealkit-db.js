@@ -8,7 +8,7 @@ var mealkits = [
         cookingTime: 30, 
         servings: 1, 
         caloriesPerServing: 230, 
-        imageUrl: "/images/grilledsalmon.jpg", 
+        imageUrl: "/default-mealkit-images/grilledsalmon.jpg", 
         topMeal: false 
     },
     { 
@@ -20,7 +20,7 @@ var mealkits = [
         cookingTime: 20, 
         servings: 2, 
         caloriesPerServing: 230, 
-        imageUrl: "/images/frenchtoast.jpg", 
+        imageUrl: "/default-mealkit-images/frenchtoast.jpg", 
         topMeal: true 
     },
     { 
@@ -32,7 +32,7 @@ var mealkits = [
         cookingTime: 30, 
         servings: 2, 
         caloriesPerServing: 150, 
-        imageUrl: "/images/veganpizza.jpg", 
+        imageUrl: "/default-mealkit-images/veganpizza.jpg", 
         topMeal: false 
     },
     { 
@@ -44,7 +44,7 @@ var mealkits = [
         cookingTime: 50, 
         servings: 4, 
         caloriesPerServing: 200, 
-        imageUrl: "/images/paella.jpg", 
+        imageUrl: "/default-mealkit-images/paella.jpg", 
         topMeal: false
     },
     { 
@@ -56,7 +56,7 @@ var mealkits = [
         cookingTime: 30, 
         servings: 2, 
         caloriesPerServing: 110, 
-        imageUrl: "/images/vegansushi.jpg", 
+        imageUrl: "/default-mealkit-images/vegansushi.jpg", 
         topMeal: true 
     },
     { 
@@ -68,7 +68,7 @@ var mealkits = [
         cookingTime: 40, 
         servings: 2, 
         caloriesPerServing: 250, 
-        imageUrl: "/images/enchiladas.jpg", 
+        imageUrl: "/default-mealkit-images/enchiladas.jpg", 
         topMeal: false 
     },
     { 
@@ -80,7 +80,7 @@ var mealkits = [
         cookingTime: 30, 
         servings: 2, 
         caloriesPerServing: 220, 
-        imageUrl: "/images/pasta.jpg", 
+        imageUrl: "/default-mealkit-images/pasta.jpg", 
         topMeal: false
     },
     { 
@@ -92,7 +92,7 @@ var mealkits = [
         cookingTime: 45, 
         servings: 1, 
         caloriesPerServing: 240, 
-        imageUrl: "/images/eggsbenedict.jpg", 
+        imageUrl: "/default-mealkit-images/eggsbenedict.jpg", 
         topMeal: true 
     }
 ];

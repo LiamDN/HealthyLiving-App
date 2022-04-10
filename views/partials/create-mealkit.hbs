@@ -1,0 +1,76 @@
+<div class="card h-100 w-75 mx-auto my-auto">
+  <form method="post" action="/load-data/create" enctype="multipart/form-data">
+    <div class="row g-0"> 
+      <div class="col-md-6">
+        <div class="card-body pb-3 row g-3">
+          <div class="col-md-12">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title">
+          </div>
+          <div class="col-md-12">
+            <label for="includes" class="form-label">Includes</label>
+            <textarea class="form-control" id="includes" name="includes" rows="2"></textarea>
+          </div>
+          <div class="col-md-12">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+          </div>
+
+          <div class="col-md-8">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" class="form-control" id="category" name="category">
+          </div>
+
+          <div class="col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="text" class="form-control" id="price" name="price">
+            </div>
+          </div>
+
+
+          <div class="col-md-4">
+            <label for="cookingTime" class="form-label">Cooking Time</label>
+            <input type="text" class="form-control" id="cookingTime" name="cookingTime">
+          </div>
+          <div class="col-md-4">
+            <label for="servings" class="form-label">Servings</label>
+            <input type="text" class="form-control" id="servings" name="servings">
+          </div>
+          <div class="col-md-4">
+            <label for="caloriesPerServing" class="form-label">Calories</label>
+            <input type="text" class="form-control" id="caloriesPerServing" name="caloriesPerServing">
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card-body pb-3 row g-3">
+          <div class="col-md-12">
+            <img src="/images/default-mealkit-image.jpg" class="card-img-top" alt="Default Mealkit Image">
+          </div>
+        
+          <div class="mb-3">
+            <label for="mealkitImg" class="form-label">Upload/Change Image File</label>
+            <input class="form-control" type="file" id="mealkitImg" name="mealkitImg">
+          </div>
+
+          <div class="mt-0">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="true" id="topMeal" name="topMeal">
+              <label class="form-check-label" for="topMeal">
+                Top Meal
+              </label>
+            </div>
+          </div>
+
+          <div class="mt-2 d-flex">
+              <a href="/dashboard/clerk" class="btn btn-outline-primary me-auto mt-auto bottom-4">Back</a>
+              <button type="submit" class="btn btn-outline-secondary mt-auto me-2 bottom-4">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

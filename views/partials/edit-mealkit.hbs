@@ -1,5 +1,5 @@
 <div class="card h-100 w-75 mx-auto my-auto">
-  <form method="post" action="/load-data/save/{{id}}">
+  <form method="post" action="/load-data/save/{{id}}" enctype="multipart/form-data">
     <div class="row g-0"> 
       <div class="col-md-6">
         <div class="card-body pb-3 row g-3">
@@ -54,12 +54,12 @@
       <div class="col-md-6">
         <div class="card-body pb-3 row g-3">
           <div class="col-md-12">
-            <img src={{imageUrl}} class="card-img-top" alt={{title}}>
+            <img src="{{imageUrl}}" class="card-img-top" alt={{title}}>
           </div>
         
           <div class="mb-3">
-            <label for="formFile" class="form-label">Upload/Change Image File</label>
-            <input class="form-control" type="file" id="formFile">
+            <label for="mealkitImg" class="form-label">Upload/Change Image File</label>
+            <input class="form-control" type="file" id="mealkitImg" name="mealkitImg">
           </div>
 
           <div class="mt-0">

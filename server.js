@@ -16,6 +16,7 @@ const exphbs = require('express-handlebars');
 const dotenv = require('dotenv');
 const mongoose = require("mongoose");
 const session = require("express-session");
+const fileUpload = require("express-fileupload")
 
 // Set up dotenv
 dotenv.config({ path: "./config/keys.env"});
@@ -45,6 +46,8 @@ app.use((req, res, next) => {
 
 // Set up body parser
 app.use(express.urlencoded({ extended: false }));
+
+app.use(fileUpload());
 
 mongoose.connect(process.env.MONGO_DB_CONN_STRING, {
     useNewUrlParser: true,

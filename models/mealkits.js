@@ -34,10 +34,7 @@ const mealKitSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    imageUrl: {
-        type: String,
-        required: true
-    },
+    imageUrl: String,
     topMeal: {
         type: Boolean,
         required: true
