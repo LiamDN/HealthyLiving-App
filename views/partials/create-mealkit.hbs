@@ -48,12 +48,12 @@
       <div class="col-md-6">
         <div class="card-body pb-3 row g-3">
           <div class="col-md-12">
-            <img src="/images/default-mealkit-image.jpg" class="card-img-top" alt="Default Mealkit Image">
+            <img id="display-mealkit-image" src="/images/default-mealkit-image.jpg" class="card-img-top" alt="Default Mealkit Image">
           </div>
         
           <div class="mb-3">
             <label for="mealkitImg" class="form-label">Upload/Change Image File</label>
-            <input class="form-control" type="file" id="mealkitImg" name="mealkitImg">
+            <input class="form-control" type="file" id="mealkitImg" name="mealkitImg" onchange="changeImage(event)">
           </div>
 
           <div class="mt-0">
@@ -73,4 +73,10 @@
       </div>
     </div>
   </form>
+
+    <script language="javascript">
+        function changeImage(event) {
+            document.getElementById("display-mealkit-image").src = URL.createObjectURL(event.target.files[0]);;
+        }
+    </script>
 </div>

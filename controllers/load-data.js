@@ -143,4 +143,46 @@ router.get("/create", function (req, res) {
     });
 });
 
+router.post("/create", function (req, res) {
+    const { title, includes, description, category, price, cookingTime, servings, caloriesPerServing, topMeal} = req.body;
+
+    const newMealKit = new mealKitModel({
+        title: title,
+        includes: includes,
+        description: description,
+        category: category,
+        price: price,
+        cookingTime: cookingTime,
+        servings: servings,
+        caloriesPerServing: caloriesPerServing,
+        topMeal: topMeal
+    });
+
+    newMealKit.save()
+    .then((mealKitSaved) => {
+        let uniqueName = `mealkit-img-${mealKitSaved._id}${path.parse(req.files.mealkitImg.name).ext}`;
+
+        // Copy the image data to a file in the "public/profile-pictures" folder.
+        req.files.mealkitImg.mv(`public/mealkit-images/${uniqueName}`)
+        .then(() => {
+        // Update the user document so that it includes the image URL.
+            mealKitModel.updateOne({_id: mealKitSaved._id}, {
+                imageUrl: `/mealkit-images/${uniqueName}`
+            })
+            .then(() => {
+                console.log("Mealkit document was updated with the picture.");
+                res.redirect("/dashboard/clerk");
+            })
+            .catch(err => {
+                console.log(`Error updating the mealkit picture ... ${err}`);
+                res.redirect("/dashboard/clerk");
+            })
+        });
+    })
+    .catch((err) => {
+        console.log(`Error updating mealkit to the database ... ${err}`);
+        res.redirect("/dashboard/clerk");
+    });
+});
+
 module.exports = router;
