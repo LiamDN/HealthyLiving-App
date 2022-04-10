@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const mealKitModel = require("../models/mealkits");
+const mealKits = require("../models/mealkit-db");
 
 router.get("/", function (req, res) {
     if(req.session.isClerk) {
@@ -15,8 +17,19 @@ router.get("/", function (req, res) {
 
 router.get("/clerk", function (req, res) {
     if(req.session.isClerk) {
-        res.render("dashboard/clerk", {
-            title: "Clerk Dashboard",
+        if(req.params.mealID) {
+
+        }
+        mealKitModel.find()
+        .exec()
+        .then(data => {
+            data = data.map(value => value.toObject());
+            //console.log(data);
+            res.render("dashboard/clerk", {
+                title: "Clerk Dashboard",
+                mealCategories: mealKits.sortMealsByCategory(data),
+                welcome: true
+            });
         });
     }
     else {

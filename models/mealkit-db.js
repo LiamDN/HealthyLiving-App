@@ -78,7 +78,7 @@ var mealkits = [
         category: "Classic Dinner Meals", 
         price: 11.99, 
         cookingTime: 30, 
-        servings: 260, 
+        servings: 2, 
         caloriesPerServing: 220, 
         imageUrl: "/images/pasta.jpg", 
         topMeal: false
@@ -124,6 +124,30 @@ module.exports.getMealsByCategory = function() {
         filtered.push({
             categoryName: mealkits[i].category,
             mealKits: [mealkits[i]]
+        });
+    }
+    return filtered;
+};
+
+module.exports.getAllMeals = function() {
+    return mealkits;
+};
+
+module.exports.sortMealsByCategory = function(arr) {
+    var filtered = [];   
+
+    for (var i = 0; i < arr.length; i++) {
+        var categoryFound = false;
+        for (var j = 0; j < filtered.length && !categoryFound; j++) {
+            if(arr[i].category === filtered[j].categoryName) {
+                filtered[j].mealKits.push(arr[i]);
+                categoryFound = true;
+            }
+        }
+        if(!categoryFound)
+        filtered.push({
+            categoryName: arr[i].category,
+            mealKits: [arr[i]]
         });
     }
     return filtered;

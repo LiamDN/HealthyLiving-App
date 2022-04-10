@@ -1,0 +1,14 @@
+<div class="card h-100">
+  <img src={{imageUrl}} class="card-img-top" alt={{title}}>
+  <div class="card-body d-flex flex-column pb-3">
+    <h5 class="card-title text-center" >{{title}}</h5>
+    <p class="card-text text-center">{{description}}</p>
+    <p>Includes: {{includes}}</p>
+    <p>Serves {{servings}} | {{caloriesPerServing}} Calories per serving | Cooking time: {{cookingTime}} mins</p>
+    <div class="mt-auto d-flex">
+        <a href="#" class="btn btn-outline-primary me-auto mt-auto bottom-4">${{price}}</a>
+        <a href="/load-data/update/{{id}}" class="btn btn-outline-secondary mt-auto me-2 bottom-4">Update</a>
+        <a href="/load-data/delete/{{id}}" class="btn btn-danger mt-auto bottom-4">Delete</a>
+    </div>
+  </div>
+</div>

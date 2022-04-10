@@ -158,7 +158,7 @@ router.post("/login", function (req, res) {
                         req.session.user = user;
                         req.session.isClerk = req.body.userRole === "clerk";
                         req.session.isCustomer = req.body.userRole === "customer";
-                        console.log("User logged in as" + req.body.userRole);
+                        console.log("User logged in as " + req.body.userRole);
                         if(req.session.isClerk) {
                             res.redirect("/dashboard/clerk");
                         }

@@ -64,10 +64,12 @@ app.use(express.static("public"));
 const generalController = require("./controllers/general");
 const userController = require("./controllers/user");
 const dashboardController = require("./controllers/dashboard");
+const loadDataController = require("./controllers/load-data");
 
 app.use("/", generalController);
 app.use("/user/", userController);
 app.use("/dashboard/", dashboardController);
+app.use("/load-data/", loadDataController);
 
 
 // *** DO NOT MODIFY THE LINES BELOW ***

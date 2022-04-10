@@ -1,0 +1,134 @@
+<div class="card h-100 w-75 mx-auto my-auto">
+  <form method="post" action="/load-data/save/{{id}}">
+    <div class="row g-0"> 
+      <div class="col-md-6">
+        <div class="card-body pb-3 row g-3">
+          {{!-- <h5 class="card-title text-center">{{title}}</h5>
+          <p class="card-text text-center">{{description}}</p>
+          <p>Includes: {{includes}}</p>
+          <p>Serves {{serves}} | {{caloriesPerServing}} Calories per serving | Cooking time: {{cookingTime}} mins</p>
+          <a href="#" class="btn btn-primary align-self-end ml-auto mt-auto bottom-4">${{price}}</a> --}}
+          <div class="col-md-12">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{title}}">
+          </div>
+          <div class="col-md-12">
+            <label for="includes" class="form-label">Includes</label>
+            <textarea class="form-control" id="includes" name="includes" rows="2">{{includes}}</textarea>
+          </div>
+          <div class="col-md-12">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3">{{description}}</textarea>
+          </div>
+
+          <div class="col-md-8">
+            <label for="category" class="form-label">Category</label>
+            <input type="text" class="form-control" id="category" name="category" value="{{category}}">
+          </div>
+
+          <div class="col-md-4">
+            <label for="price" class="form-label">Price</label>
+            <div class="input-group">
+              <span class="input-group-text">$</span>
+              <input type="text" class="form-control" id="price" name="price" value="{{price}}">
+            </div>
+          </div>
+
+
+          <div class="col-md-4">
+            <label for="cookingTime" class="form-label">Cooking Time</label>
+            <input type="text" class="form-control" id="cookingTime" name="cookingTime" value="{{cookingTime}}">
+          </div>
+          <div class="col-md-4">
+            <label for="servings" class="form-label">Servings</label>
+            <input type="text" class="form-control" id="servings" name="servings" value="{{servings}}">
+          </div>
+          <div class="col-md-4">
+            <label for="caloriesPerServing" class="form-label">Calories</label>
+            <input type="text" class="form-control" id="caloriesPerServing" name="caloriesPerServing"
+              value="{{caloriesPerServing}}">
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card-body pb-3 row g-3">
+          <div class="col-md-12">
+            <img src={{imageUrl}} class="card-img-top" alt={{title}}>
+          </div>
+        
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Upload/Change Image File</label>
+            <input class="form-control" type="file" id="formFile">
+          </div>
+
+          <div class="mt-0">
+            <div class="form-check">
+              {{#if topMeal}}
+              <input class="form-check-input" type="checkbox" value="true" id="topMeal" name="topMeal" checked>
+              {{else}}
+              <input class="form-check-input" type="checkbox" value="true" id="topMeal" name="topMeal">
+              {{/if}}
+              <label class="form-check-label" for="topMeal">
+                Top Meal
+              </label>
+            </div>
+          </div>
+
+          <div class="mt-2 d-flex">
+              <a href="/dashboard/clerk" class="btn btn-outline-primary me-auto mt-auto bottom-4">Back</a>
+              <button type="submit" class="btn btn-outline-secondary mt-auto me-2 bottom-4">Save Changes</button>
+              <a href="/load-data/delete/{{id}}" class="btn btn-danger mt-auto bottom-4">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+{{!-- <form class="row g-3">
+  <div class="col-md-6">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title">
+  </div>
+  <div class="col-md-6">
+    <label for="includes" class="form-label">Includes</label>
+    <input type="text" class="form-control" id="includes">
+  </div>
+  <div class="col-md-6">
+    <label for="includes" class="form-label">Includes</label>
+    <input type="text" class="form-control" id="includes">
+  </div>
+  <div class="col-md-6">
+    <label for="includes" class="form-label">Includes</label>
+    <input type="text" class="form-control" id="includes">
+  </div>
+  <div class="col-md-6">
+    <label for="includes" class="form-label">Includes</label>
+    <input type="text" class="form-control" id="includes">
+  </div>
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">State</label>
+    <select id="inputState" class="form-select">
+      <option selected>Choose...</option>
+      <option>...</option>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="includes" class="form-label">Includes</label>
+    <input type="text" class="form-control" id="includes">
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Check me out
+      </label>
+    </div>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </div>
+</form> --}}

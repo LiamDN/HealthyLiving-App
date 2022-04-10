@@ -356,7 +356,7 @@ footer {
 .dashboard-img {
     background-image: url("/images/welcome.jpg");
     background-size: cover;
-    width: 70px;
+    min-width: 70px;
     height: 600px;
     border: #31525B;
     border-width: 3px;
@@ -371,4 +371,5 @@ footer {
     flex-grow: 100;
     background-color: aliceblue;
     padding: 30px;
+    overflow-y: auto;
 }
