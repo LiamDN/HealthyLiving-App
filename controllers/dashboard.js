@@ -17,9 +17,6 @@ router.get("/", function (req, res) {
 
 router.get("/clerk", function (req, res) {
     if(req.session.isClerk) {
-        if(req.params.mealID) {
-
-        }
         mealKitModel.find()
         .exec()
         .then(data => {

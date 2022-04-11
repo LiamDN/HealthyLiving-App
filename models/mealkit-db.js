@@ -152,3 +152,15 @@ module.exports.sortMealsByCategory = function(arr) {
     }
     return filtered;
 };
+
+module.exports.sortTopMeals = function(arr) {
+    var filtered = [];
+
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].topMeal) {
+            filtered.push(arr[i]);
+        }
+    }
+
+    return filtered;
+};

@@ -7,12 +7,12 @@
         {{#if welcome}}
             <div class="d-flex w-100">
                 <p class="pb-3 pt-3 font-weight-bold h2">Data Entry Clerk Dashboard</p>
-                <a href="/load-data/create" class="btn btn-outline-secondary ms-auto me-2 my-auto">Create New Mealkit</a>
+                <a href="/data-clerk/create" class="btn btn-outline-secondary ms-auto me-2 my-auto">Create New Mealkit</a>
                 <a href="/load-data/meal-kits" class="btn btn-outline-secondary me-2 my-auto">Load Data</a>
-                <a href="/load-data/delete-all" class="btn btn-danger my-auto">Delete All</a>
+                <a href="/data-clerk/delete-all" class="btn btn-danger my-auto">Delete All</a>
             </div>
             <p class="pb-3 pt-3 h4">Welcome {{user.firstName}}!</p>
-                <p>This is your data entry dashboard. It is currently under construction.</p>
+                <p>This is your data entry dashboard. Create, edit and remove meal kits.</p>
             <p>Return to the <a href="/">home page</a>.</p>
         {{/if}}
         {{#if message}}

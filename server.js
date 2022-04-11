@@ -68,12 +68,13 @@ const generalController = require("./controllers/general");
 const userController = require("./controllers/user");
 const dashboardController = require("./controllers/dashboard");
 const loadDataController = require("./controllers/load-data");
+const dataClerkController = require("./controllers/data-clerk");
 
 app.use("/", generalController);
 app.use("/user/", userController);
 app.use("/dashboard/", dashboardController);
 app.use("/load-data/", loadDataController);
-
+app.use("/data-clerk/", dataClerkController);
 
 // *** DO NOT MODIFY THE LINES BELOW ***
 
