@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mealKitModel = require("../models/mealkits");
-const mealKits = require("../models/mealkit-db");
+const mealKitSorters = require("../controllers/meal-sorters");
 
 router.get("/", function (req, res) {
     if(req.session.isClerk) {
@@ -24,7 +24,7 @@ router.get("/clerk", function (req, res) {
             //console.log(data);
             res.render("dashboard/clerk", {
                 title: "Clerk Dashboard",
-                mealCategories: mealKits.sortMealsByCategory(data),
+                mealCategories: mealKitSorters.sortMealsByCategory(data),
                 welcome: true
             });
         });

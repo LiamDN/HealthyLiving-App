@@ -3,7 +3,7 @@ const router = express.Router();
 const mealKitModel = require("../models/mealkits");
 const { default: mongoose } = require('mongoose');
 
-const mealKits = require("../models/mealkit-db");
+const mealKitSorters = require("../controllers/meal-sorters");
 
 router.get("/", function (req, res) {
     mealKitModel.find()
@@ -12,7 +12,7 @@ router.get("/", function (req, res) {
         data = data.map(value => value.toObject());
         res.render("general/home", {
             title: "Home Page",
-            topMeals: mealKits.sortTopMeals(data)
+            topMeals: mealKitSorters.sortTopMeals(data)
         });
     });
 });
@@ -24,7 +24,7 @@ router.get("/on-the-menu", function (req, res) {
         data = data.map(value => value.toObject());
         res.render("general/on-the-menu", {
             title: "On The Menu",
-            mealCategories: mealKits.sortMealsByCategory(data)
+            mealCategories: mealKitSorters.sortMealsByCategory(data)
         });
     });
 });

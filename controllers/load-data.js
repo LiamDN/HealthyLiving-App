@@ -2,14 +2,12 @@ const express = require('express')
 const router = express.Router();
 const mealKitModel = require("../models/mealkits");
 const mealKits = require("../models/mealkit-db");
+const mealKitSorters = require("../controllers/meal-sorters");
 const { default: mongoose } = require('mongoose');
 const path = require("path");
 
 router.get("/", function (req, res) {
-    res.render("general/home", {
-        title: "Home Page",
-        topMeals: mealKits.getTopMeals()
-    });
+    res.redirect("/");
 });
 
 router.get("/meal-kits", function (req, res) {
@@ -34,7 +32,7 @@ router.get("/meal-kits", function (req, res) {
                             //console.log(data);
                             res.render("dashboard/clerk", {
                                 title: "Clerk Dashboard",
-                                mealCategories: mealKits.sortMealsByCategory(data),
+                                mealCategories: mealKitSorters.sortMealsByCategory(data),
                                 welcome: true,
                                 message: "Added meal kits to the database"
                             });
@@ -50,12 +48,17 @@ router.get("/meal-kits", function (req, res) {
                     //console.log(data);
                     res.render("dashboard/clerk", {
                         title: "Clerk Dashboard",
-                        mealCategories: mealKits.sortMealsByCategory(data),
+                        mealCategories: mealKitSorters.sortMealsByCategory(data),
                         welcome: true,
                         message: "Meal kits have already been added to the database"
                     });
                 });
             }
+        });
+    }
+    else {
+        res.render("general/error", {
+            message: "You are not authorized to add meal kits."
         });
     }
 });

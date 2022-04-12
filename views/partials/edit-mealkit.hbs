@@ -1,5 +1,5 @@
 <div class="card h-100 w-75 mx-auto my-auto">
-  <form method="post" action="/data-clerk/save/{{id}}" enctype="multipart/form-data">
+  <form method="post" action="/data-clerk/update/{{id}}" enctype="multipart/form-data">
     <div class="row g-0"> 
       <div class="col-md-6">
         <div class="card-body pb-3 row g-3">
@@ -11,19 +11,31 @@
           <div class="col-md-12">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title" value="{{title}}">
+            {{#if validationMessages.title}}
+                <span style="color: red;">{{validationMessages.title}}</span>
+            {{/if}}
           </div>
           <div class="col-md-12">
             <label for="includes" class="form-label">Includes</label>
             <textarea class="form-control" id="includes" name="includes" rows="2">{{includes}}</textarea>
+            {{#if validationMessages.includes}}
+                <span style="color: red;">{{validationMessages.includes}}</span>
+            {{/if}}
           </div>
           <div class="col-md-12">
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" name="description" rows="3">{{description}}</textarea>
+            {{#if validationMessages.description}}
+                <span style="color: red;">{{validationMessages.description}}</span>
+            {{/if}}
           </div>
 
           <div class="col-md-8">
             <label for="category" class="form-label">Category</label>
             <input type="text" class="form-control" id="category" name="category" value="{{category}}">
+            {{#if validationMessages.category}}
+                <span style="color: red;">{{validationMessages.category}}</span>
+            {{/if}}
           </div>
 
           <div class="col-md-4">
@@ -32,21 +44,33 @@
               <span class="input-group-text">$</span>
               <input type="text" class="form-control" id="price" name="price" value="{{price}}">
             </div>
+            {{#if validationMessages.price}}
+                <span style="color: red;">{{validationMessages.price}}</span>
+            {{/if}}
           </div>
 
 
           <div class="col-md-4">
-            <label for="cookingTime" class="form-label">Cooking Time</label>
+            <label for="cookingTime" class="form-label">Cooking Time (Minutes)</label>
             <input type="text" class="form-control" id="cookingTime" name="cookingTime" value="{{cookingTime}}">
+            {{#if validationMessages.cookingTime}}
+                <span style="color: red;">{{validationMessages.cookingTime}}</span>
+            {{/if}}
           </div>
           <div class="col-md-4">
             <label for="servings" class="form-label">Servings</label>
             <input type="text" class="form-control" id="servings" name="servings" value="{{servings}}">
+            {{#if validationMessages.servings}}
+                <span style="color: red;">{{validationMessages.servings}}</span>
+            {{/if}}
           </div>
           <div class="col-md-4">
             <label for="caloriesPerServing" class="form-label">Calories</label>
             <input type="text" class="form-control" id="caloriesPerServing" name="caloriesPerServing"
               value="{{caloriesPerServing}}">
+            {{#if validationMessages.caloriesPerServing}}
+              <span style="color: red;">{{validationMessages.caloriesPerServing}}</span>
+            {{/if}}
           </div>
         </div>
       </div>
@@ -59,7 +83,7 @@
         
           <div class="mb-3">
             <label for="mealkitImg" class="form-label">Upload/Change Image File</label>
-            <input class="form-control" type="file" id="mealkitImg" name="mealkitImg" onchange="changeImage(event)">
+            <input class="form-control" type="file" id="mealkitImg" name="mealkitImg" onchange="changeImage(event)" accept=".png, .jpg, .jpeg, .gif">
           </div>
 
           <div class="mt-0">
@@ -75,6 +99,8 @@
             </div>
           </div>
 
+          <input type="hidden" name="imageUrl" value="{{imageUrl}}" />
+          <input type="hidden" name="id" value="{{id}}" />
           <div class="mt-2 d-flex">
               <a href="/dashboard/clerk" class="btn btn-outline-primary me-auto mt-auto bottom-4">Back</a>
               <button type="submit" class="btn btn-outline-secondary mt-auto me-2 bottom-4">Save Changes</button>
