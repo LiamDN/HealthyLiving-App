@@ -12,6 +12,7 @@ router.get("/update/:id", function (req, res) {
             .then(data => {
                 data = data.toObject();
                 console.log(data);
+                // Render update page with mealkit data
                 res.render("dashboard/clerk", {
                     title: "Clerk Dashboard",
                     editMealKit: data
@@ -60,6 +61,7 @@ router.post("/update/:id", function (req, res) {
 
         var priceRegex = /^\d+\.\d{2}$/;
 
+        // Mealkit input fields validation
         if (typeof title !== 'string' || title.trim().length === 0) {
             passedValidation = false;
             validationMessages.title = "Please add a title";
@@ -112,12 +114,11 @@ router.post("/update/:id", function (req, res) {
             .then((mealKitUpdated) => {
                 console.log("Successfully update the for " + req.params.id);
 
+                // Create unique image name for file
                 let uniqueName = `mealkit-img-${updatingMealkitID}${path.parse(req.files.mealkitImg.name).ext}`;
 
-                // Copy the image data to a file in the "public/profile-pictures" folder.
                 req.files.mealkitImg.mv(`public/mealkit-images/${uniqueName}`)
                     .then(() => {
-                        // Update the user document so that it includes the image URL.
                         mealKitModel.updateOne({ _id: updatingMealkitID }, {
                             imageUrl: `/mealkit-images/${uniqueName}`
                         })
@@ -128,7 +129,7 @@ router.post("/update/:id", function (req, res) {
                             .catch(err => {
                                 console.log(`Error updating the mealkit picture ... ${err}`);
                                 res.redirect("/dashboard/clerk");
-                            })
+                            });
                     });
             })
             .catch((err) => {
@@ -137,6 +138,7 @@ router.post("/update/:id", function (req, res) {
             });
         }
         else {
+            // If didnt pass validation, rerender update page with same data and validation messages
             var values = req.body;
             values.validationMessages = validationMessages;
             res.render("dashboard/clerk", {
@@ -171,6 +173,7 @@ router.post("/create", function (req, res) {
 
         var priceRegex = /^\d+\.\d{2}$/;
 
+        // Mealkit input fields validation
         if (typeof title !== 'string' || title.trim().length === 0) {
             passedValidation = false;
             validationMessages.title = "Please add a title";
@@ -220,12 +223,12 @@ router.post("/create", function (req, res) {
             newMealKit.save()
             .then((mealKitSaved) => {
                 if(req.files !== null) {
+
+                    // Create unique image name for file
                     let uniqueName = `mealkit-img-${mealKitSaved._id}${path.parse(req.files.mealkitImg.name).ext}`;
     
-                    // Copy the image data to a file in the "public/profile-pictures" folder.
                     req.files.mealkitImg.mv(`public/mealkit-images/${uniqueName}`)
                     .then(() => {
-                        // Update the user document so that it includes the image URL.
                         mealKitModel.updateOne({ _id: mealKitSaved._id }, {
                             imageUrl: `/mealkit-images/${uniqueName}`
                         })
@@ -253,11 +256,12 @@ router.post("/create", function (req, res) {
                 }
             })
             .catch((err) => {
-                console.log(`Error updating mealkit to the database ... ${err}`);
+                console.log(`Error adding mealkit to the database ... ${err}`);
                 res.redirect("/dashboard/clerk");
             });
         }
         else {
+            // If didnt pass validation, rerender update page with same data and validation messages
             res.render("dashboard/clerk", {
                 title: "Clerk Dashboard",
                 values: req.body,

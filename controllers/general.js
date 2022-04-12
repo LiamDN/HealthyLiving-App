@@ -12,7 +12,7 @@ router.get("/", function (req, res) {
         data = data.map(value => value.toObject());
         res.render("general/home", {
             title: "Home Page",
-            topMeals: mealKitSorters.sortTopMeals(data)
+            topMeals: mealKitSorters.sortTopMeals(data) // Filters the top meals mealkits from database 
         });
     });
 });
@@ -24,7 +24,7 @@ router.get("/on-the-menu", function (req, res) {
         data = data.map(value => value.toObject());
         res.render("general/on-the-menu", {
             title: "On The Menu",
-            mealCategories: mealKitSorters.sortMealsByCategory(data)
+            mealCategories: mealKitSorters.sortMealsByCategory(data) // Sorts the mealkits from database by category
         });
     });
 });

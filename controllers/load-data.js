@@ -17,7 +17,7 @@ router.get("/meal-kits", function (req, res) {
                 res.send("Couldn't count the documents: " + err);
             }
             else if (count === 0) {
-                // No documents exist.  Add them now.
+                // No documents exist, get default data from file and insert into database
                 var mealKitsToAdd = mealKits.getAllMeals();
     
                 mealKitModel.collection.insertMany(mealKitsToAdd, (err, docs) => {
@@ -32,7 +32,7 @@ router.get("/meal-kits", function (req, res) {
                             //console.log(data);
                             res.render("dashboard/clerk", {
                                 title: "Clerk Dashboard",
-                                mealCategories: mealKitSorters.sortMealsByCategory(data),
+                                mealCategories: mealKitSorters.sortMealsByCategory(data), // Function sorts mealkits by category from database
                                 welcome: true,
                                 message: "Added meal kits to the database"
                             });
@@ -41,6 +41,7 @@ router.get("/meal-kits", function (req, res) {
                 });
             }
             else {
+                // If there is already data, do not load (prevents duplicates)
                 mealKitModel.find()
                 .exec()
                 .then(data => {
@@ -48,7 +49,7 @@ router.get("/meal-kits", function (req, res) {
                     //console.log(data);
                     res.render("dashboard/clerk", {
                         title: "Clerk Dashboard",
-                        mealCategories: mealKitSorters.sortMealsByCategory(data),
+                        mealCategories: mealKitSorters.sortMealsByCategory(data), 
                         welcome: true,
                         message: "Meal kits have already been added to the database"
                     });
