@@ -35,4 +35,18 @@ router.get("/welcome", function (req, res) {
     });
 });
 
+router.get("/mealkits/:id", function (req, res) {
+    mealKitModel.findById(req.params.id)
+        .exec()
+        .then(data => {
+            data = data.toObject();
+            console.log(data);
+            // Render mealkit description page
+            res.render("general/mealkit-description", {
+                title: "Welcome!",
+                mealkit: data
+            });
+        });
+});
+
 module.exports = router;

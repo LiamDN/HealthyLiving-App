@@ -373,3 +373,36 @@ footer {
     padding: 30px;
     overflow-y: auto;
 }
+
+
+.mealkit {
+    overflow: hidden;
+}
+
+.mealkit img {
+    transition: transform .4s ease;
+}
+  
+
+.mealkit:hover img {
+    transform: scale(1.15);
+}
+
+.mealkit-desc-img {
+    background-position: center; 
+    background-size: cover;
+}
+
+.mealkit-caption-text {
+    min-height: 60px;
+    background-color:rgba(240, 255, 255, 0.500);
+}
+.mealkit-desc-text {
+    background-color: azure;
+    font-family:'Courier New', Courier, monospace;
+}
+
+.mealkit-desc-header {
+    font-weight: 700;
+    font-family:'Courier New', Courier, monospace;
+}
