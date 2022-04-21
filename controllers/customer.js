@@ -21,7 +21,49 @@ router.get("/shopping-cart", function (req, res) {
 router.get("/check-out", function (req, res) {
     if (req.session.isCustomer) { 
         let cart = req.session.shoppingCart || [];
+
+        const sgMail = require("@sendgrid/mail");
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+
+        let emailMsg = 
+        `
+        Hi ${req.session.user.firstName}!<br><br>
         
+        Thank you for shopping with us. Your order details are as follows:<br><br>
+        `
+
+        cart.forEach((cartItem) => {
+            emailMsg = emailMsg + 
+            `
+            ${cartItem.data.title} | Price: ${cartItem.data.price} <br>
+            Quantity: ${cartItem.qty} | Total Price: ${cartItem.extPrice} <br><br>
+            `
+        });
+
+        emailMsg = emailMsg + 
+        `
+        Return to the home page: https://web322-lnugara1.herokuapp.com<br><br>
+
+        Author: Liam Nugara, Website Name: HealthyLiving<br>
+        `
+
+        const msg = {
+            to: req.session.user.email,
+            from: "lnugara1@myseneca.ca",
+            subject: "HealthyLiving Order Confirmation",
+            html: emailMsg
+        } ;
+
+        sgMail.send(msg)
+            .then(() => {
+  
+            })
+            .catch(err => {
+                // If email couldn't be sent
+                console.log(`Error ${err}`);
+                validationMessages.email = "Invalid email, confirmation could not be sent to " + email;
+                });
+
         req.session.shoppingCart = [];
 
         res.render("dashboard/customer", {
