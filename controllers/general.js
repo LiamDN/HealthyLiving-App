@@ -39,13 +39,20 @@ router.get("/mealkits/:id", function (req, res) {
     mealKitModel.findById(req.params.id)
         .exec()
         .then(data => {
-            data = data.toObject();
-            console.log(data);
-            // Render mealkit description page
-            res.render("general/mealkit-description", {
-                title: "Welcome!",
-                mealkit: data
-            });
+            if(data !== null) {
+                data = data.toObject();
+                console.log(data);
+                // Render mealkit description page
+                res.render("general/mealkit-description", {
+                    title: "Mealkit | " + data.title,
+                    mealkit: data
+                });
+            }
+            else {
+                res.render("general/error", {
+                    message: "Meakit does not exist",
+                });
+            }
         });
 });
 

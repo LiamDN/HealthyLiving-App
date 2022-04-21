@@ -1,0 +1,47 @@
+<div>
+    <div class="d-flex w-100">
+        <p class="pb-3 pt-3 h4">Shopping Cart</p>
+        <a href="/dashboard/customer" class="btn btn-outline-secondary ms-auto me-2 my-auto">Back</a>
+    </div>
+    
+    <div class="containter mt-3">
+        <div class="row">
+            <div class="col">
+                {{#each shoppingCart}}
+                    <div class="d-flex mb-3 p-2 cart-item">
+                        <img src="{{this.data.imageUrl}}" class="cart-img">
+                        <div class="ms-3 w-50">
+                            <div class="fs-5 fw-bold">{{this.data.title}}</div>
+                            <div class="mb-1">{{this.data.includes}}</div>
+                            <div>{{this.data.category}}</div>
+                        </div>
+                        <div class="ms-auto me-3">
+                            <div class="fw-bold">Quanitity</div>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <a href="/customer/add-one-mealkit/{{id}}" class="quantity-button">+</a>
+                                <div class="mx-2" id="item-quanitity">{{this.qty}}</div>
+                                <a href="/customer/remove-one-mealkit/{{id}}" class="quantity-button">-</a>
+                            </div>  
+                        </div>
+                        <div class="ms-auto me-2">
+                            <div class="fw-bold">Price</div>
+                            <div class="mb-2" id="item-price">${{this.data.price}}</div>
+                            <div class="fw-bold">Extended Price</div>
+                            <div id="ext-price">${{this.extPrice}}</div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="col-4">
+                <div class="cart-summary p-3 w-100 h-100">
+                    <div class="fw-bold fs-4 mb-1">Total Price</div>
+                    <div class="fs-4 mb-2">${{totalPrice}}</div>
+                    <a href="/customer/check-out" class="btn btn-outline-secondary ms-auto me-2 my-auto">Check Out</a>
+                    {{#if message}}
+                        <div class="text-success mt-3 fs-6">{{message}}</div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

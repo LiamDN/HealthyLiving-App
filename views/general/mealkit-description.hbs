@@ -22,6 +22,25 @@
         <div class="mt-3 mb-2 fs-2">{{mealkit.title}}</div>
         <div class="mb-3">{{mealkit.includes}}</div>
         <div class="mb-3">{{mealkit.description}}</div>
-        <a href="/" class="btn btn-outline-primary mx-auto mb-4">Buy for ${{mealkit.price}}</a>
+        <a href="/customer/add-mealkit/{{mealkit.id}}/" class="btn btn-outline-primary mx-auto mb-4" onclick="showAddedToCartToast()">Buy for ${{mealkit.price}}</a>
     </div>
+    
+    {{#if toastMessage}}
+        <div class="toast position-fixed bottom-0 end-0 m-3 align-items-center" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{toastMessage}}
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    {{/if}}
+  
+    <script>
+        var toastLiveExample = document.getElementById('liveToast')
+        if (toastLiveExample) {
+            var toast = new bootstrap.Toast(toastLiveExample)
+            toast.show()
+        }
+    </script>
 </div>

@@ -406,3 +406,34 @@ footer {
     font-weight: 700;
     font-family:'Courier New', Courier, monospace;
 }
+
+.cart-summary {
+    background-color: white;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+}
+
+.cart-item {
+    background-color: white;
+    box-shadow: 0 0 5px #ccc;
+    border-radius: 5px;
+}
+
+.cart-img {
+    height: 100px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.quantity-button {
+    width:20px;
+    height: 20px;
+    background-color:lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #31525B;
+}

@@ -41,6 +41,7 @@ app.use((req, res, next) => {
     res.locals.user = req.session.user;
     res.locals.isClerk = req.session.isClerk;
     res.locals.isCustomer = req.session.isCustomer;
+    res.locals.shoppingCart = req.session.shoppingCart;
     next();
 })
 
@@ -69,12 +70,14 @@ const userController = require("./controllers/user");
 const dashboardController = require("./controllers/dashboard");
 const loadDataController = require("./controllers/load-data");
 const dataClerkController = require("./controllers/data-clerk");
+const customerController = require("./controllers/customer");
 
 app.use("/", generalController);
 app.use("/user/", userController);
 app.use("/dashboard/", dashboardController);
 app.use("/load-data/", loadDataController);
 app.use("/data-clerk/", dataClerkController);
+app.use("/customer/", customerController);
 
 // *** DO NOT MODIFY THE LINES BELOW ***
 

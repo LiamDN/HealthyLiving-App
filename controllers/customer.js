@@ -1,0 +1,174 @@
+const express = require("express");
+const router = express.Router();
+const mealKitModel = require("../models/mealkits");
+const { default: mongoose } = require('mongoose');
+
+router.get("/shopping-cart", function (req, res) {
+    if (req.session.isCustomer) { 
+        let cart = req.session.shoppingCart || [];
+        
+        res.render("dashboard/customer", {
+            title: "Shopping Cart",
+            showCart: true,
+            totalPrice: calculateTotal(cart)
+        });
+    }
+    else {
+        res.redirect("/");
+    }
+});
+
+router.get("/check-out", function (req, res) {
+    if (req.session.isCustomer) { 
+        let cart = req.session.shoppingCart || [];
+        
+        req.session.shoppingCart = [];
+
+        res.render("dashboard/customer", {
+            title: "Shopping Cart",
+            showCart: true,
+            message: "Thank you for your purchase, you are now checked out.",
+            totalPrice: calculateTotal(cart)
+        });
+    }
+    else {
+        res.redirect("/");
+    }
+});
+
+router.get("/add-mealkit/:id", (req, res) => {
+    mealKitModel.findById(req.params.id)
+        .exec()
+        .then(data => {
+            if(data !== null) {
+                let message;
+
+                data = data.toObject();
+                console.log(data);
+                
+                if(req.session.isCustomer) {
+                    let cart = req.session.shoppingCart = req.session.shoppingCart || [];
+
+                    let found = false;
+                    cart.forEach(cartMeal => {
+                        if (cartMeal.id == req.params.id) {
+                            found = true;
+                            cartMeal.qty++;
+                            cartMeal.extPrice = cartMeal.data.price * cartMeal.qty;
+                        }
+                    });
+                    if (found) {
+                        message = data.title + " was already in the cart, increased the quantity by one.";
+                    }
+                    else {
+                        cart.push({
+                            id: req.params.id,
+                            qty: 1,
+                            data,
+                            extPrice: JSON.parse(data.price)
+                        });
+                        message = data.title + " added to cart."
+                    }
+
+                    // Render mealkit description page
+                    res.render("general/mealkit-description", {
+                        title: "Mealkit | " + data.title,
+                        mealkit: data,
+                        toastMessage: message
+                    });
+                }
+                else {
+                    res.render("general/mealkit-description", {
+                        title: "Mealkit | " + data.title,
+                        mealkit: data,
+                        toastMessage: "You must be logged in to add to cart."
+                    });
+                }
+            }
+            else {
+                res.render("general/error", {
+                    message: "Meakit does not exist"
+                });
+            }
+        })    
+});
+
+router.get("/add-one-mealkit/:id", (req, res) => {
+    mealKitModel.findById(req.params.id)
+        .exec()
+        .then(data => {
+            if(data !== null) {
+
+                data = data.toObject();
+                console.log(data);
+                
+                if(req.session.isCustomer) {
+                    let cart = req.session.shoppingCart = req.session.shoppingCart || [];
+
+                    cart.forEach(cartMeal => {
+                        if (cartMeal.id == req.params.id) {
+                            cartMeal.qty++;
+                            cartMeal.extPrice = cartMeal.data.price * cartMeal.qty;
+                        }
+                    });
+
+                    res.render("dashboard/customer", {
+                        title: "Shopping Cart",
+                        showCart: true,
+                        totalPrice: calculateTotal(cart)
+                    });
+                }
+                else {
+                    res.redirect("/");
+                }
+            }
+            else {
+                res.redirect("/");
+            }
+        })    
+});
+
+router.get("/remove-one-mealkit/:id", (req, res) => {
+    mealKitModel.findById(req.params.id)
+        .exec()
+        .then(data => {
+            if(data !== null) {
+
+                data = data.toObject();
+                console.log(data);
+                
+                if(req.session.isCustomer) {
+                    let cart = req.session.shoppingCart = req.session.shoppingCart || [];
+
+                    cart.forEach(cartMeal => {
+                        if (cartMeal.id == req.params.id && cartMeal.qty > 0) {
+                            cartMeal.qty--;
+                            cartMeal.extPrice = cartMeal.data.price * cartMeal.qty;
+                        }
+                    });
+
+                    res.render("dashboard/customer", {
+                        title: "Shopping Cart",
+                        showCart: true,
+                        totalPrice: calculateTotal(cart)
+                    });
+                }
+                else {
+                    res.redirect("/");
+                }
+            }
+            else {
+                res.redirect("/");
+            }
+        })    
+});
+
+function calculateTotal(cart) {
+    var total = 0;
+    cart.forEach((cartItem) => {
+        total += cartItem.extPrice;
+    });
+    return total;
+}
+
+module.exports = router;

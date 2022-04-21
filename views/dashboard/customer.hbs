@@ -4,11 +4,15 @@
     </div>
     <div class="dashboard-text">
         {{#if user}}
-        <p class="pb-3 pt-3 font-weight-bold h2">Customer Dashboard</p>
-        <p class="pb-3 pt-3 h4">Welcome {{user.firstName}}!</p>
-        <p class="pb-3 pt-3 h4">Shopping Cart</p>
-        <p>This is your shopping cart. You can find the list of items you are purchasing here. Currently under construction.</p>
-        <p>Return to the <a href="/">home page</a>.</p>
+            {{#if showCart}}
+                {{>shopping-cart}}
+            {{else}}
+                <p class="pb-3 pt-3 font-weight-bold h2">Customer Dashboard</p>
+                <p class="pb-3 pt-3 h4">Welcome {{user.firstName}}!</p>
+                <a href="/customer/shopping-cart" class="btn btn-lg btn-outline-primary mx-auto mb-4">Shopping Cart</a>
+                <p>Click to go to your shopping cart. You can find the list of items you are purchasing here.</p>
+                <p>Return to the <a href="/">home page</a>.</p>
+            {{/if}}
         {{else}}
         <h2 class="pb-3 pt-3">Dashboard Error!</h2>
         <p>Your are not signed in as a customer. You should not be able to see this page.</p> 
