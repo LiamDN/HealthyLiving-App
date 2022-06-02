@@ -4,6 +4,8 @@ const mealKitModel = require("../models/mealkits");
 const mealKits = require("../models/mealkit-db");
 const { default: mongoose } = require('mongoose');
 const path = require("path");
+const axios = require('axios');
+const FormData = require('form-data');
 
 router.get("/update/:id", function (req, res) {
     if (req.session.isClerk) { 
@@ -223,14 +225,24 @@ router.post("/create", function (req, res) {
             newMealKit.save()
             .then((mealKitSaved) => {
                 if(req.files !== null) {
+                    var data = new FormData();
+                    data.append('image', req.files.mealkitImg.data, req.files.mealkitImg.name);
 
-                    // Create unique image name for file
-                    let uniqueName = `mealkit-img-${mealKitSaved._id}${path.parse(req.files.mealkitImg.name).ext}`;
-    
-                    req.files.mealkitImg.mv(`public/mealkit-images/${uniqueName}`)
-                    .then(() => {
+                    var config = {
+                        method: 'post',
+                        url: 'https://api.imgur.com/3/image',
+                        headers: { 
+                          'Authorization': 'Client-ID 3ab58ab8bc0d617', 
+                          ...data.getHeaders()
+                        },
+                        data: data
+                      };
+
+                    axios(config)
+                    .then(response => {
+                        console.log(response.data.data.link);
                         mealKitModel.updateOne({ _id: mealKitSaved._id }, {
-                            imageUrl: `/mealkit-images/${uniqueName}`
+                            imageUrl: response.data.data.link
                         })
                         .then(() => {
                             console.log("Mealkit document was updated with the picture.");
@@ -240,6 +252,9 @@ router.post("/create", function (req, res) {
                             console.log(`Error updating the mealkit picture ... ${err}`);
                             res.redirect("/dashboard/clerk");
                         })
+                    })
+                    .catch(error => {
+                        console.log(error);
                     });
                 }
                 else {
