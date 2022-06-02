@@ -116,23 +116,44 @@ router.post("/update/:id", function (req, res) {
             .then((mealKitUpdated) => {
                 console.log("Successfully update the for " + req.params.id);
 
-                // Create unique image name for file
-                let uniqueName = `mealkit-img-${updatingMealkitID}${path.parse(req.files.mealkitImg.name).ext}`;
+                if(req.files !== null) {
+                    console.log("went in");
+                    var data = new FormData();
+                    data.append('image', req.files.mealkitImg.data, req.files.mealkitImg.name);
 
-                req.files.mealkitImg.mv(`public/mealkit-images/${uniqueName}`)
-                    .then(() => {
+                    var config = {
+                        method: 'post',
+                        url: 'https://api.imgur.com/3/image',
+                        headers: { 
+                          'Authorization': 'Client-ID 3ab58ab8bc0d617', 
+                          ...data.getHeaders()
+                        },
+                        data: data
+                      };
+
+                    axios(config)
+                    .then(response => {
+                        console.log(response.data.data.link);
                         mealKitModel.updateOne({ _id: updatingMealkitID }, {
-                            imageUrl: `/mealkit-images/${uniqueName}`
+                            imageUrl: response.data.data.link
                         })
-                            .then(() => {
-                                console.log("Mealkit document was updated with the picture.");
-                                res.redirect("/dashboard/clerk");
-                            })
-                            .catch(err => {
-                                console.log(`Error updating the mealkit picture ... ${err}`);
-                                res.redirect("/dashboard/clerk");
-                            });
+                        .then(() => {
+                            console.log("Mealkit document was updated with the picture.");
+                            res.redirect("/dashboard/clerk");
+                        })
+                        .catch(err => {
+                            console.log(`Error updating the mealkit picture ... ${err}`);
+                            res.redirect("/dashboard/clerk");
+                        })
+                    })
+                    .catch(error => {
+                        console.log(error);
                     });
+                }
+                else {
+                    console.log("Mealkit document was updated without new picture.");
+                    res.redirect("/dashboard/clerk");
+                }
             })
             .catch((err) => {
                 console.log(`Error updating mealkit to the database ... ${err}`);
