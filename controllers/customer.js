@@ -96,7 +96,7 @@ router.get("/add-mealkit/:id", (req, res) => {
                         if (cartMeal.id == req.params.id) {
                             found = true;
                             cartMeal.qty++;
-                            cartMeal.extPrice = cartMeal.data.price * cartMeal.qty;
+                            cartMeal.extPrice = parseFloat((cartMeal.data.price * cartMeal.qty).toFixed(2));
                         }
                     });
                     if (found) {
@@ -107,7 +107,7 @@ router.get("/add-mealkit/:id", (req, res) => {
                             id: req.params.id,
                             qty: 1,
                             data,
-                            extPrice: JSON.parse(data.price)
+                            extPrice: parseFloat(JSON.parse(data.price))
                         });
                         message = data.title + " added to cart."
                     }
@@ -150,7 +150,7 @@ router.get("/add-one-mealkit/:id", (req, res) => {
                     cart.forEach(cartMeal => {
                         if (cartMeal.id == req.params.id) {
                             cartMeal.qty++;
-                            cartMeal.extPrice = cartMeal.data.price * cartMeal.qty;
+                            cartMeal.extPrice = parseFloat((cartMeal.data.price * cartMeal.qty).toFixed(2));
                         }
                     });
 
@@ -185,7 +185,7 @@ router.get("/remove-one-mealkit/:id", (req, res) => {
                     cart.forEach(cartMeal => {
                         if (cartMeal.id == req.params.id && cartMeal.qty > 0) {
                             cartMeal.qty--;
-                            cartMeal.extPrice = cartMeal.data.price * cartMeal.qty;
+                            cartMeal.extPrice = parseFloat((cartMeal.data.price * cartMeal.qty).toFixed(2));
                         }
                     });
 
@@ -206,11 +206,11 @@ router.get("/remove-one-mealkit/:id", (req, res) => {
 });
 
 function calculateTotal(cart) {
-    var total = 0;
+    var total = 0.00;
     cart.forEach((cartItem) => {
         total += cartItem.extPrice;
     });
-    return total;
+    return parseFloat(total).toFixed(2);
 }
 
 module.exports = router;
