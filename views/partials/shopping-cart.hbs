@@ -16,12 +16,13 @@
                             <div>{{this.data.category}}</div>
                         </div>
                         <div class="ms-auto me-3">
-                            <div class="fw-bold">Quanitity</div>
+                            <div class="fw-bold">Quantity</div>
                             <div class="d-flex align-items-center justify-content-center">
                                 <a href="/customer/add-one-mealkit/{{id}}" class="quantity-button">+</a>
                                 <div class="mx-2" id="item-quanitity">{{this.qty}}</div>
                                 <a href="/customer/remove-one-mealkit/{{id}}" class="quantity-button">-</a>
                             </div>  
+                            <a href="/customer/remove-mealkit/{{id}}" class="btn btn-outline-danger remove-button btn-sm">Remove</a>
                         </div>
                         <div class="ms-auto me-2">
                             <div class="fw-bold">Price</div>

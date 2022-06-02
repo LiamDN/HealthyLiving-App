@@ -33,11 +33,13 @@ router.get("/check-out", function (req, res) {
         `
 
         cart.forEach((cartItem) => {
-            emailMsg = emailMsg + 
-            `
-            ${cartItem.data.title} | Price: ${cartItem.data.price} <br>
-            Quantity: ${cartItem.qty} | Total Price: ${cartItem.extPrice} <br><br>
-            `
+            if(cartItem.qty > 0) {
+                emailMsg = emailMsg + 
+                `
+                ${cartItem.data.title} | Price: ${cartItem.data.price} <br>
+                Quantity: ${cartItem.qty} | Total Price: ${cartItem.extPrice} <br><br>
+                `
+            }
         });
 
         emailMsg = emailMsg + 
@@ -185,9 +187,40 @@ router.get("/remove-one-mealkit/:id", (req, res) => {
                     cart.forEach(cartMeal => {
                         if (cartMeal.id == req.params.id && cartMeal.qty > 0) {
                             cartMeal.qty--;
-                            cartMeal.extPrice = parseFloat((cartMeal.data.price * cartMeal.qty).toFixed(2));
+                            cartMeal.extPrice = parseFloat(cartMeal.data.price * cartMeal.qty).toFixed(2);
                         }
                     });
+
+                    res.render("dashboard/customer", {
+                        title: "Shopping Cart",
+                        showCart: true,
+                        totalPrice: calculateTotal(cart)
+                    });
+                }
+                else {
+                    res.redirect("/");
+                }
+            }
+            else {
+                res.redirect("/");
+            }
+        })    
+});
+
+router.get("/remove-mealkit/:id", (req, res) => {
+    mealKitModel.findById(req.params.id)
+        .exec()
+        .then(data => {
+            if(data !== null) {
+
+                data = data.toObject();
+                console.log(data);
+                
+                if(req.session.isCustomer) {
+                    let cart = req.session.shoppingCart = req.session.shoppingCart || [];
+
+                    var deleteIndex = cart.findIndex(cartMeal => cartMeal.id == req.params.id);
+                    cart.splice(deleteIndex, 1);
 
                     res.render("dashboard/customer", {
                         title: "Shopping Cart",
