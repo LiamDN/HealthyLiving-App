@@ -10,12 +10,12 @@ router.get("/registration", function (req, res) {
 });
 
 router.post("/registration", function (req, res) {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     let passedValidation = true;
     let validationMessages = {};
     // Regular Expression taken and modified from https://www.ocpsoft.org/tutorials/regular-expressions/password-regular-expression/
-    var passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;\"\'<>,.?\/~`_+\-=|\\]).{8,12}$/;
+    var passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@#$%^&(){}\[\]:;\"\'<>,.?\/~`_+\-=|\\]).{8,}$/;
 
     var emailRegex = /^[a-zA-Z0-9._\-+\/~!#$%^&()\[\]{}|\"\'*?:;<>,?]+@[a-zA-Z0-9._\/-]+\.[a-zA-Z]{2,3}$/;
 
@@ -42,6 +42,16 @@ router.post("/registration", function (req, res) {
     else if (!passwordRegex.test(password)) {
         passedValidation = false;
         validationMessages.passwordInvalid = true;
+    }
+    else {
+        if (typeof confirmPassword !== 'string' || confirmPassword.trim().length === 0) {
+            passedValidation = false;
+            validationMessages.confirmPasswordNull = "Please confirm your password";
+        }
+        else if (password != confirmPassword) {
+            passedValidation = false;
+            validationMessages.confirmPasswordInvalid = true;
+        }
     }
 
     // Send verification email and add user to the database

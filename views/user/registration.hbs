@@ -2,14 +2,14 @@
     <h2 class="form-header">Sign Up</h2>
     <form method="post" action="/user/registration">
         <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
+            <label for="firstName" class="form-label">First name</label>
             <input type="text" class="form-control" placeholder="Enter first name" id="firstName" name="firstName" value="{{values.firstName}}">
             {{#if validationMessages.firstName}}
                 <span style="color: red;">{{validationMessages.firstName}}</span>
             {{/if}}
         </div>
         <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
+            <label for="lastName" class="form-label">Last name</label>
             <input type="text" class="form-control" placeholder="Enter last name" id="lastName" name="lastName" value="{{values.lastName}}">
             {{#if validationMessages.lastName}}
                 <span style="color: red;">{{validationMessages.lastName}}</span>
@@ -27,13 +27,23 @@
                 <label for="password" class="form-label">Password</label>
                 <span class="ms-auto" onclick="togglePassword()"><i class="fa-solid fa-eye me-1" id="eye-icon"></i> Show</span>
             </div>
-            <input type="password" class="form-control" id="password" placeholder="Enter password" id="password" name="password" value="{{values.password}}">
+            <input type="password" class="form-control password" id="password" placeholder="Enter password" name="password" value="{{values.password}}">
             {{#if validationMessages.passwordNull}}
                 <span style="color: red;">{{validationMessages.passwordNull}}</span>
             {{/if}}
             {{#if validationMessages.passwordInvalid}}
-                <span style="color: red;">Please enter a password (8 to 12 characters)<br>
+                <span style="color: red;">Please enter a password (8 or more characters)<br>
                     Must constain at least: 1 lowercase, 1 uppercase, 1 number, 1 symbol</span>
+            {{/if}}
+        </div>
+        <div class="mb-3">
+            <label for="confirm-password" class="form-label">Confirm password</label>
+            <input type="password" class="form-control password" id="confirmPassword" placeholder="Enter password" name="confirmPassword" value="{{values.confirmPassword}}">
+            {{#if validationMessages.confirmPasswordNull}}
+                <span style="color: red;">{{validationMessages.confirmPasswordNull}}</span>
+            {{/if}}
+            {{#if validationMessages.confirmPasswordInvalid}}
+                <span style="color: red;">Passwords did not match</span>
             {{/if}}
         </div>
         <button type="submit" class="btn btn-primary">Sign up!</button>
@@ -41,13 +51,17 @@
 
     <script>
         const eyeIcon = document.querySelector("#eye-icon");
-        const password = document.querySelector("#password");
+        const password = document.querySelectorAll(".password");
 
         function togglePassword() {
+
+            for (i = 0; i < password.length; i++) {
+                const type = password[i].getAttribute("type") === "password" ? "text" : "password";
+                password[i].setAttribute("type", type);
+            }
             // toggle the type attribute
-            const type = password.getAttribute("type") === "password" ? "text" : "password";
-            password.setAttribute("type", type);
             
+
             // toggle the icon
             eyeIcon.classList.toggle("fa-eye");
             eyeIcon.classList.toggle("fa-eye-slash");
