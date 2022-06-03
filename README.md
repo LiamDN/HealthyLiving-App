@@ -7,4 +7,4 @@ Course/Section: WEB322NDD
 
 ## Project URLs
 GitHub Repository: https://github.com/LiamDN/HealthyLiving-App<br/>
-Heroku URL: https://healthyliving-app.herokuapp.com/
+Heroku URL: https://healthyliving-app.herokuapp.com

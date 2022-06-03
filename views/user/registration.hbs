@@ -23,8 +23,11 @@
             {{/if}}
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="text" class="form-control" placeholder="Enter password" id="password" name="password" value="{{values.password}}">
+            <div class="d-flex">
+                <label for="password" class="form-label">Password</label>
+                <span class="ms-auto" onclick="togglePassword()"><i class="fa-solid fa-eye me-1" id="eye-icon"></i> Show</span>
+            </div>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" id="password" name="password" value="{{values.password}}">
             {{#if validationMessages.passwordNull}}
                 <span style="color: red;">{{validationMessages.passwordNull}}</span>
             {{/if}}
@@ -35,4 +38,25 @@
         </div>
         <button type="submit" class="btn btn-primary">Sign up!</button>
     </form>
+
+    <script>
+        const eyeIcon = document.querySelector("#eye-icon");
+        const password = document.querySelector("#password");
+
+        function togglePassword() {
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            
+            // toggle the icon
+            eyeIcon.classList.toggle("fa-eye");
+            eyeIcon.classList.toggle("fa-eye-slash");
+        };
+
+        // prevent form submit
+        //const form = document.querySelector("form");
+        //form.addEventListener('submit', function (e) {
+        //    e.preventDefault();
+        //});
+    </script>
 </div>

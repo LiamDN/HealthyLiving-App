@@ -37,14 +37,16 @@ router.get("/check-out", function (req, res) {
                 emailMsg = emailMsg + 
                 `
                 ${cartItem.data.title} | Price: ${cartItem.data.price} <br>
-                Quantity: ${cartItem.qty} | Total Price: ${cartItem.extPrice} <br><br>
+                Quantity: ${cartItem.qty} | Ext Price: ${cartItem.extPrice} <br><br>
                 `
             }
         });
 
         emailMsg = emailMsg + 
         `
-        Return to the home page: https://web322-lnugara1.herokuapp.com<br><br>
+        Total: ${calculateTotal(cart)}<br><br>
+
+        Return to the home page: https://healthyliving-app.herokuapp.com<br><br>
 
         Author: Liam Nugara, Website Name: HealthyLiving<br>
         `
