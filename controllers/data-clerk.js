@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mealKitModel = require("../models/mealkits");
 const mealKits = require("../models/mealkit-db");
+const mealKitSorters = require("../controllers/meal-sorters");
 const { default: mongoose } = require('mongoose');
 const path = require("path");
 const axios = require('axios');
@@ -9,15 +10,17 @@ const FormData = require('form-data');
 
 router.get("/update/:id", function (req, res) {
     if (req.session.isClerk) { 
-        mealKitModel.findById(req.params.id)
+        mealKitModel.find()
             .exec()
             .then(data => {
-                data = data.toObject();
-                console.log(data);
+                data = data.map(value => value.toObject());
+                //console.log(mealKitSorters.sortMealsByCategory(data));
+                var values = data.find(data => data.id == req.params.id);
+                values.mealCategories = mealKitSorters.sortMealsByCategory(data);
                 // Render update page with mealkit data
                 res.render("dashboard/clerk", {
                     title: "Clerk Dashboard",
-                    editMealKit: data
+                    editMealKit: values,
                 });
             });
     }
@@ -162,11 +165,26 @@ router.post("/update/:id", function (req, res) {
         }
         else {
             // If didnt pass validation, rerender update page with same data and validation messages
-            var values = req.body;
-            values.validationMessages = validationMessages;
-            res.render("dashboard/clerk", {
-                title: "Clerk Dashboard",
-                editMealKit: values,
+            // var values = req.body;
+            // values.validationMessages = validationMessages;
+            // res.render("dashboard/clerk", {
+            //     title: "Clerk Dashboard",
+            //     editMealKit: values,
+            // });
+
+            mealKitModel.find()
+            .exec()
+            .then(data => {
+                data = data.map(value => value.toObject());
+                //console.log(mealKitSorters.sortMealsByCategory(data));
+                var values = req.body;
+                values.validationMessages = validationMessages;
+                values.mealCategories = mealKitSorters.sortMealsByCategory(data);
+                // Render update page with mealkit data
+                res.render("dashboard/clerk", {
+                    title: "Clerk Dashboard",
+                    editMealKit: values,
+                });
             });
         }
     }
@@ -177,10 +195,16 @@ router.post("/update/:id", function (req, res) {
 
 router.get("/create", function (req, res) {
     if (req.session.isClerk) {
-        res.render("dashboard/clerk", {
-            title: "Clerk Dashboard",
-            createMealKit: true
-        });
+        mealKitModel.find()
+            .exec()
+            .then(data => {
+                data = data.map(value => value.toObject());
+                res.render("dashboard/clerk", {
+                    title: "Clerk Dashboard",
+                    createMealKit: true,
+                    mealCategories: mealKitSorters.sortMealsByCategory(data),
+                });
+            });  
     }
     else {
         res.redirect("/");
@@ -298,12 +322,19 @@ router.post("/create", function (req, res) {
         }
         else {
             // If didnt pass validation, rerender update page with same data and validation messages
-            res.render("dashboard/clerk", {
-                title: "Clerk Dashboard",
-                values: req.body,
-                createMealKit: true,
-                validationMessages
-            });
+            mealKitModel.find()
+            .exec()
+            .then(data => {
+                data = data.map(value => value.toObject());
+                console.log(data);
+                res.render("dashboard/clerk", {
+                    title: "Clerk Dashboard",
+                    values: req.body,
+                    createMealKit: true,
+                    validationMessages,
+                    mealCategories: mealKitSorters.sortMealsByCategory(data),
+                });
+            });  
         }
         
     }
