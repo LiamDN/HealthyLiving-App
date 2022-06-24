@@ -189,7 +189,7 @@ router.get("/remove-one-mealkit/:id", (req, res) => {
                     cart.forEach(cartMeal => {
                         if (cartMeal.id == req.params.id && cartMeal.qty > 0) {
                             cartMeal.qty--;
-                            cartMeal.extPrice = parseFloat(cartMeal.data.price * cartMeal.qty).toFixed(2);
+                            cartMeal.extPrice = parseFloat((cartMeal.data.price * cartMeal.qty).toFixed(2));
                         }
                     });
 
