@@ -1,9 +1,7 @@
-# WEB322 Project (Winter 2022)
-I declare that this assignment is my own work in accordance with the Seneca Academic Policy. No part of this assignment has been copied manually or electronically from any other source (including web sites) or distributed to other students.
+# HealthyLiving App
+This project mock food service website created to demonstration the implementation of backend functionality using ExpressJS and server-side rendering using express-handlebars. It includes the capablity to log in as a customer, to use the application as a client, or to log in as an admin, to edit meal kits and website content.
 
-Name: Liam Nugara<br/>
-Student ID: 122206204<br/>
-Course/Section: WEB322NDD
+Author: Liam Nugara<br/>
 
 ## Project URLs
 GitHub Repository: https://github.com/LiamDN/HealthyLiving-App<br/>
